@@ -1,0 +1,34 @@
+# Environment / secrets
+.env
+
+# Generated reports
+reports/
+
+# Downloaded wordlists (large files)
+wordlists/*.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+env/
+.venv/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
