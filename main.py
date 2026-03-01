@@ -78,7 +78,12 @@ def run(args: argparse.Namespace) -> None:
     from modules.models import ReconResult
     from modules.report_generator import ReportGenerator
 
-    domain = args.domain.lower().strip().lstrip("https://").lstrip("http://").rstrip("/")
+    domain = args.domain.lower().strip()
+    for prefix in ("https://", "http://"):
+        if domain.startswith(prefix):
+            domain = domain[len(prefix):]
+            break
+    domain = domain.rstrip("/")
     recon = ReconResult(domain=domain)
 
     run_all = args.all

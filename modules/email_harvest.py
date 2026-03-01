@@ -49,6 +49,8 @@ class EmailHarvest:
 
     def _google_scrape(self, domain: str) -> list[str]:
         emails: set[str] = set()
+        session = requests.Session()
+        session.max_redirects = 5
         queries = [
             f'site:{domain} "@{domain}"',
             f'"@{domain}" email contact',
@@ -58,7 +60,7 @@ class EmailHarvest:
                 time.sleep(config.RATE_LIMIT_HTTP)
                 url = "https://www.google.com/search"
                 params = {"q": query, "num": 30}
-                resp = requests.get(url, headers=_HEADERS, params=params, timeout=10)
+                resp = session.get(url, headers=_HEADERS, params=params, timeout=10)
                 if resp.status_code == 429:
                     break  # Rate limited by Google
                 soup = BeautifulSoup(resp.text, "html.parser")

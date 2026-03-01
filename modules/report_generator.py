@@ -35,8 +35,11 @@ class ReportGenerator:
         }
 
         html = template.render(**context)
-        filename = f"{recon.domain.replace('.', '_')}_osint_report.html"
+        safe_name = recon.domain.replace('.', '_').replace('/', '_').replace('\\', '_')
+        filename = f"{safe_name}_osint_report.html"
         output_path = os.path.join(config.REPORTS_DIR, filename)
+        if not os.path.abspath(output_path).startswith(os.path.abspath(config.REPORTS_DIR)):
+            raise ValueError(f"Invalid domain produces unsafe path: {output_path}")
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(html)
         return output_path

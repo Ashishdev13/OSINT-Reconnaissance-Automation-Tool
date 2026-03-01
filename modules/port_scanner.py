@@ -30,13 +30,14 @@ class PortScanner:
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(1.0)
-            sock.connect((host, port))
-            # Send a minimal HTTP request for web ports; otherwise just recv
-            if port in (80, 8080, 8000, 8008):
-                sock.send(b"HEAD / HTTP/1.0\r\n\r\n")
-            banner = sock.recv(256).decode("utf-8", errors="ignore").strip()
-            sock.close()
-            return banner[:120] if banner else None
+            try:
+                sock.connect((host, port))
+                if port in (80, 8080, 8000, 8008):
+                    sock.send(b"HEAD / HTTP/1.0\r\n\r\n")
+                banner = sock.recv(256).decode("utf-8", errors="ignore").strip()
+                return banner[:120] if banner else None
+            finally:
+                sock.close()
         except Exception:
             return None
 
@@ -45,9 +46,11 @@ class PortScanner:
             time.sleep(config.RATE_LIMIT_PORT_SCAN)
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(config.PORT_SCAN_TIMEOUT)
-            result = sock.connect_ex((host, port))
-            sock.close()
-            return port, result == 0
+            try:
+                result = sock.connect_ex((host, port))
+                return port, result == 0
+            finally:
+                sock.close()
         except Exception:
             return port, False
 

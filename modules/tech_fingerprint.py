@@ -181,9 +181,11 @@ class TechFingerprint:
     def run(self, domain: str) -> TechResult:
         url = f"https://{domain}"
         result = TechResult(domain=domain, url=url)
+        session = requests.Session()
+        session.max_redirects = 5
         try:
             time.sleep(config.RATE_LIMIT_HTTP)
-            resp = requests.get(url, headers=_HEADERS, timeout=10, allow_redirects=True)
+            resp = session.get(url, headers=_HEADERS, timeout=10, allow_redirects=True)
             result.url = resp.url
 
             result.server = resp.headers.get("Server")
@@ -203,7 +205,7 @@ class TechFingerprint:
             try:
                 url = f"http://{domain}"
                 time.sleep(config.RATE_LIMIT_HTTP)
-                resp = requests.get(url, headers=_HEADERS, timeout=10, allow_redirects=True)
+                resp = session.get(url, headers=_HEADERS, timeout=10, allow_redirects=True)
                 result.url = resp.url
                 result.server = resp.headers.get("Server")
                 result.powered_by = resp.headers.get("X-Powered-By")

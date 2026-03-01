@@ -26,13 +26,18 @@ class ShodanLookup:
             info.ports = host.get("ports", [])
             info.hostnames = host.get("hostnames", [])
 
-            # Parse vulnerabilities
-            for cve_id, cve_data in host.get("vulns", {}).items():
-                info.vulns.append(ShodanVuln(
-                    cve_id=cve_id,
-                    cvss=cve_data.get("cvss"),
-                    summary=cve_data.get("summary", "")[:200],
-                ))
+            # Parse vulnerabilities (Shodan returns list of CVE IDs or dict)
+            vulns_data = host.get("vulns", [])
+            if isinstance(vulns_data, list):
+                for cve_id in vulns_data:
+                    info.vulns.append(ShodanVuln(cve_id=cve_id))
+            elif isinstance(vulns_data, dict):
+                for cve_id, cve_data in vulns_data.items():
+                    info.vulns.append(ShodanVuln(
+                        cve_id=cve_id,
+                        cvss=cve_data.get("cvss") if isinstance(cve_data, dict) else None,
+                        summary=(cve_data.get("summary", "")[:200]) if isinstance(cve_data, dict) else "",
+                    ))
             info.vulns.sort(key=lambda v: v.cvss or 0, reverse=True)
         except shodan.APIError as e:
             info.error = str(e)
