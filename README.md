@@ -56,6 +56,7 @@ This project was built to demonstrate how security professionals perform the **r
 | **Progress** | `tqdm` | Real-time progress bars |
 | **Terminal UI** | `colorama` | Cross-platform colored output |
 | **Config** | `python-dotenv` | Secure API key management from `.env` |
+| **Testing** | `pytest` + `pytest-cov` + `pytest-mock` | Unit tests with 88% coverage |
 
 ---
 
@@ -171,6 +172,52 @@ The report includes:
 
 ---
 
+## Testing
+
+The project includes a comprehensive **pytest** test suite covering all modules with a focus on security-critical code paths.
+
+### Quick Start
+
+```bash
+# Install test dependencies
+pip install -r requirements-dev.txt
+
+# Run all tests
+pytest
+
+# Run with coverage report
+pytest --cov=modules --cov=main --cov=config --cov-report=term-missing
+```
+
+### Coverage Summary
+
+| Module | Coverage | Key Tests |
+|--------|----------|-----------|
+| `config.py` | 100% | Env var loading, path construction |
+| `models.py` | 100% | Dataclass defaults, field independence |
+| `report_generator.py` | 95% | Path traversal guard, XSS autoescape |
+| `main.py` | 93% | Domain sanitization, CLI args, disclaimer |
+| `port_scanner.py` | 89% | Socket cleanup on exception, banner grab |
+| `email_harvest.py` | 86% | Hunter.io API, Google scrape, 429 handling |
+| `subdomain_bruteforce.py` | 86% | Wordlist loading, threaded resolution |
+| `tech_fingerprint.py` | 86% | Pattern matching, SSL fallback, redirect limit |
+| `whois_lookup.py` | 80% | Date formatting, list handling, error paths |
+| `shodan_lookup.py` | 73% | Vulns as list vs dict, API key gating |
+| `dns_enum.py` | 69% | All record types, NXDOMAIN/timeout suppression |
+| **Overall** | **88%** | **135 tests, all passing** |
+
+### Security-Critical Tests
+
+These tests verify the fixes for vulnerabilities found during code review:
+
+- **Domain sanitization regression** — `stripe.com` is not corrupted to `ripe.com` (verifies `lstrip()` fix)
+- **Path traversal guard** — domains with `../`, `/`, and `\` cannot write files outside `reports/`
+- **Socket resource cleanup** — sockets are closed via `try/finally` even on exceptions (prevents fd exhaustion)
+- **API key gating** — modules with empty API keys return immediately without making network calls
+- **Redirect limiting** — HTTP requests follow a maximum of 5 redirects
+
+---
+
 ## Project Structure
 
 ```
@@ -179,6 +226,8 @@ OSINT-Reconnaissance-Automation-Tool/
 ├── config.py                       # API keys, rate limits, file paths
 ├── download_wordlist.py            # SecLists wordlist downloader
 ├── requirements.txt                # Python dependencies
+├── requirements-dev.txt            # Test dependencies (pytest, coverage)
+├── pytest.ini                      # Pytest configuration
 ├── .env.example                    # API key template (copy to .env)
 ├── modules/
 │   ├── models.py                   # Shared dataclasses (ReconResult, etc.)
@@ -192,6 +241,19 @@ OSINT-Reconnaissance-Automation-Tool/
 │   └── report_generator.py         # HTML report renderer
 ├── templates/
 │   └── report.html                 # Jinja2 HTML report template
+├── tests/
+│   ├── conftest.py                 # Shared fixtures (mock config, sample HTML)
+│   ├── test_main.py                # CLI + domain sanitization tests
+│   ├── test_models.py              # Dataclass tests
+│   ├── test_whois_lookup.py        # WHOIS module tests
+│   ├── test_dns_enum.py            # DNS module tests
+│   ├── test_subdomain_bruteforce.py # Subdomain module tests
+│   ├── test_email_harvest.py       # Email module tests
+│   ├── test_tech_fingerprint.py    # Tech detection module tests
+│   ├── test_port_scanner.py        # Port scanner module tests
+│   ├── test_shodan_lookup.py       # Shodan module tests
+│   ├── test_report_generator.py    # Report generator module tests
+│   └── test_config.py              # Configuration tests
 ├── wordlists/
 │   └── subdomains-top1million-5000.txt   # Downloaded by download_wordlist.py
 └── reports/                        # Generated HTML reports (git-ignored)
