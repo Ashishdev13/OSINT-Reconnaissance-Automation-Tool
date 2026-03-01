@@ -70,7 +70,7 @@ This project was built to demonstrate how security professionals perform the **r
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/ashishdevchoudhary/OSINT-Reconnaissance-Automation-Tool.git
+git clone https://github.com/Ashishdev13/OSINT-Reconnaissance-Automation-Tool.git
 cd OSINT-Reconnaissance-Automation-Tool
 
 # 2. (Recommended) Create a virtual environment
