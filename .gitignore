@@ -27,6 +27,11 @@ env/
 .AppleDouble
 .LSOverride
 
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
 # IDEs
 .vscode/
 .idea/
