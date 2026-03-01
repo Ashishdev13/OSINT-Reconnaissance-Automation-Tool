@@ -14,7 +14,7 @@
 
 The **OSINT Reconnaissance Automation Tool** is a modular, Python-based open-source intelligence (OSINT) framework that automates passive and active information gathering against a target domain. It consolidates eight distinct reconnaissance techniques into a single CLI tool, then renders all findings into a clean, dark-themed HTML report.
 
-This project was built to demonstrate how security professionals perform the **reconnaissance phase** of a penetration test — the critical first step in understanding an organization's internet-facing attack surface before any active exploitation is attempted.
+This project was built to demonstrate how security professionals perform the **reconnaissance phase** of a penetration test - the critical first step in understanding an organization's internet-facing attack surface before any active exploitation is attempted.
 
 ---
 
@@ -23,17 +23,17 @@ This project was built to demonstrate how security professionals perform the **r
 | Concept | Description |
 |---------|-------------|
 | **OSINT Methodology** | Structured intelligence gathering from publicly available sources without touching target systems directly |
-| **Passive Reconnaissance** | WHOIS lookups, DNS record queries, and email harvesting — all conducted against public databases and APIs, leaving no footprint on the target |
+| **Passive Reconnaissance** | WHOIS lookups, DNS record queries, and email harvesting - all conducted against public databases and APIs, leaving no footprint on the target |
 | **Active Reconnaissance** | Port scanning and subdomain brute-forcing that directly interact with target infrastructure (requires explicit authorization) |
 | **DNS Enumeration** | Mapping A, MX, NS, TXT, and CNAME records to understand mail infrastructure, CDN providers, and third-party services |
-| **Subdomain Discovery** | Brute-force resolution of subdomains using a curated wordlist — surfaces hidden admin panels, staging environments, and forgotten services |
+| **Subdomain Discovery** | Brute-force resolution of subdomains using a curated wordlist - surfaces hidden admin panels, staging environments, and forgotten services |
 | **WHOIS Intelligence** | Extracting registrar, registrant, creation/expiry dates, and name servers to build an ownership profile and identify potential domain squatting |
-| **Email Harvesting** | Collecting corporate email addresses via APIs and search engines — these are primary targets for phishing and credential stuffing |
-| **Technology Fingerprinting** | Identifying web frameworks, CMS platforms, CDN providers, and analytics tools from HTTP headers and HTML patterns — narrows the attack surface |
+| **Email Harvesting** | Collecting corporate email addresses via APIs and search engines - these are primary targets for phishing and credential stuffing |
+| **Technology Fingerprinting** | Identifying web frameworks, CMS platforms, CDN providers, and analytics tools from HTTP headers and HTML patterns - narrows the attack surface |
 | **Port Scanning** | Discovering open TCP ports to map exposed services and identify potentially unnecessary or unpatched network daemons |
-| **Vulnerability Correlation** | Using the Shodan API to match discovered IPs against known CVEs — connects passive intel to real-world exploitability |
+| **Vulnerability Correlation** | Using the Shodan API to match discovered IPs against known CVEs - connects passive intel to real-world exploitability |
 | **Rate Limiting** | Built-in request throttling to demonstrate responsible, non-disruptive reconnaissance practices |
-| **Modular Architecture** | Each recon technique is an independent module — mirrors real-world tool design in frameworks like Recon-ng and Spiderfoot |
+| **Modular Architecture** | Each recon technique is an independent module - mirrors real-world tool design in frameworks like Recon-ng and Spiderfoot |
 
 ---
 
@@ -86,7 +86,7 @@ python download_wordlist.py
 
 # 5. Set up API keys
 cp .env.example .env
-# Open .env and add your keys (all optional — modules degrade gracefully)
+# Open .env and add your keys (all optional - modules degrade gracefully)
 ```
 
 ### API Keys (Optional but Recommended)
@@ -97,7 +97,7 @@ cp .env.example .env
 | `SHODAN_API_KEY` | [account.shodan.io](https://account.shodan.io/) | Free with registration |
 | `BUILTWITH_API_KEY` | [api.builtwith.com](https://api.builtwith.com/) | Limited free tier |
 
-All modules degrade gracefully when API keys are absent — the tool still runs using non-API methods.
+All modules degrade gracefully when API keys are absent - the tool still runs using non-API methods.
 
 ---
 
@@ -160,14 +160,14 @@ python -m modules.shodan_lookup example.com
 The tool generates a self-contained **dark-themed HTML report** saved to `reports/<domain>_osint_report.html` and automatically opens it in your default browser.
 
 The report includes:
-- **Summary bar** — quick stats (IPs, subdomains, emails, open ports, CVE count)
-- **WHOIS** — registrar, dates, name servers, registrant info
-- **DNS Records** — all record types in tagged format
-- **Subdomains** — discovered subdomains with resolved IPs
-- **Emails** — harvested addresses with sources
-- **Technology Stack** — detected frameworks, servers, and tools
-- **Open Ports** — port number, service name, and banner
-- **Shodan Intelligence** — per-IP CVE list with CVSS scores and NVD links
+- **Summary bar** - quick stats (IPs, subdomains, emails, open ports, CVE count)
+- **WHOIS** - registrar, dates, name servers, registrant info
+- **DNS Records** - all record types in tagged format
+- **Subdomains** - discovered subdomains with resolved IPs
+- **Emails** - harvested addresses with sources
+- **Technology Stack** - detected frameworks, servers, and tools
+- **Open Ports** - port number, service name, and banner
+- **Shodan Intelligence** - per-IP CVE list with CVSS scores and NVD links
 
 ---
 
@@ -218,11 +218,11 @@ All delays are configurable in `config.py`.
 
 > **This tool is provided for educational and authorized security research purposes only.**
 >
-> The techniques and capabilities demonstrated in this project — including port scanning, subdomain enumeration, and email harvesting — are standard methods used by professional penetration testers and security researchers with **explicit written authorization** from the system owner.
+> The techniques and capabilities demonstrated in this project - including port scanning, subdomain enumeration, and email harvesting - are standard methods used by professional penetration testers and security researchers with **explicit written authorization** from the system owner.
 >
 > **Do not use this tool against systems you do not own or have explicit written permission to test.** Unauthorized reconnaissance may violate:
-> - **Computer Fraud and Abuse Act (CFAA)** — United States
-> - **Computer Misuse Act 1990** — United Kingdom
+> - **Computer Fraud and Abuse Act (CFAA)** - United States
+> - **Computer Misuse Act 1990** - United Kingdom
 > - **Cybercrime laws** in your jurisdiction
 >
 > The author assumes no liability for misuse of this software. By using this tool, you confirm that you are operating within the bounds of the law and with proper authorization.
@@ -231,4 +231,4 @@ All delays are configurable in `config.py`.
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License - see [LICENSE](LICENSE) for details.
