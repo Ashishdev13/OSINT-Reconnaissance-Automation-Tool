@@ -135,7 +135,7 @@ python main.py --domain example.com --all --yes
 | `--subdomains` | | Subdomain brute-force (wordlist) |
 | `--emails` | | Email address harvesting |
 | `--tech` | | Technology fingerprinting |
-| `--ports` | | Port scan (TCP 1–1024) |
+| `--ports` | | Port scan (TCP 1-1024) |
 | `--shodan` | | Shodan CVE/host intelligence |
 | `--no-open` | | Don't auto-open HTML report |
 | `--yes` | `-y` | Skip ethical use disclaimer prompt |
@@ -210,11 +210,11 @@ pytest --cov=modules --cov=main --cov=config --cov-report=term-missing
 
 These tests verify the fixes for vulnerabilities found during code review:
 
-- **Domain sanitization regression** — `stripe.com` is not corrupted to `ripe.com` (verifies `lstrip()` fix)
-- **Path traversal guard** — domains with `../`, `/`, and `\` cannot write files outside `reports/`
-- **Socket resource cleanup** — sockets are closed via `try/finally` even on exceptions (prevents fd exhaustion)
-- **API key gating** — modules with empty API keys return immediately without making network calls
-- **Redirect limiting** — HTTP requests follow a maximum of 5 redirects
+- **Domain sanitization regression** - `stripe.com` is not corrupted to `ripe.com` (verifies `lstrip()` fix)
+- **Path traversal guard** - domains with `../`, `/`, and `\` cannot write files outside `reports/`
+- **Socket resource cleanup** - sockets are closed via `try/finally` even on exceptions (prevents fd exhaustion)
+- **API key gating** - modules with empty API keys return immediately without making network calls
+- **Redirect limiting** - HTTP requests follow a maximum of 5 redirects
 
 ---
 
